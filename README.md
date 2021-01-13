@@ -21,3 +21,5 @@ change dir to your workspace
 initialize a go project
 
 `goinit my-app`
+
+> The layout of the initialized project is derived from [https://github.com/golang-standards/project-layout](https://github.com/golang-standards/project-layout)

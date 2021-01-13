@@ -14,5 +14,5 @@ func main() {
 		return
 	}
 
-	entry.Init(os.Args[1])
+	entry.NewInitiator(os.Args[1]).Init()
 }

@@ -12,24 +12,55 @@ var (
 	mainContent = "package main\n\nfunc main() {\n\n}"
 )
 
+// Initiator interface
+type Initiator interface {
+	Init()
+}
+
+type initiator struct {
+	appName string
+}
+
+// NewInitiator Factory
+func NewInitiator(appName string) Initiator {
+	return &initiator{appName: appName}
+}
+
 // Init inits a go project
-func Init(appName string) {
+func (i *initiator) Init() {
 
-	mkdir("", appName)
-
-	mkdirs(appName+"/", dirs)
-	mkdir(appName+"/", "/cmd/"+appName)
-
-	mainFile := appName + "/cmd/" + appName + "/" + appName + ".go"
-	touch(mainFile)
-	write(mainContent, mainFile)
-
-	readmeFile := appName + "/" + readme
-	touch(readmeFile)
-	write("# "+appName+"\n", readmeFile)
+	i.createRootDir()
+	i.createL1Dirs()
+	i.createCMDDir()
+	i.createMainFile()
+	i.createREADME()
 
 	fmt.Println("Go project init complete, happy coding :)")
 
+}
+
+func (i *initiator) createRootDir() {
+	mkdir("", i.appName)
+}
+
+func (i *initiator) createL1Dirs() {
+	mkdirs(i.appName+"/", dirs)
+}
+
+func (i *initiator) createCMDDir() {
+	mkdir(i.appName+"/", "/cmd/"+i.appName)
+}
+
+func (i *initiator) createMainFile() {
+	mainFile := i.appName + "/cmd/" + i.appName + "/" + i.appName + ".go"
+	touch(mainFile)
+	write(mainContent, mainFile)
+}
+
+func (i *initiator) createREADME() {
+	readmeFile := i.appName + "/" + readme
+	touch(readmeFile)
+	write("# "+i.appName+"\n", readmeFile)
 }
 
 func mkdir(rootDir, dir string) error {
